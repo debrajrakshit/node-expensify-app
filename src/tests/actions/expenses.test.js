@@ -68,8 +68,7 @@ test('should edit expenses from firebase', (done) => {
     const store = createMockStore({});
     const id = expenses[2].id;
     const updates = {
-        description: 'Test description',
-        note: 'Test note'
+        description: 'Test description'
     };
 
     store.dispatch(startEditExpense(id, updates)).then(() => {
@@ -81,7 +80,7 @@ test('should edit expenses from firebase', (done) => {
         });
         return database.ref(`expenses/${id}`).once('value');
     }).then((snapshot) => {
-        expect(snapshot.val()).toBeTruthy();
+        expect(snapshot.val().description).toBe(updates.description);
         done();
     });
 });
